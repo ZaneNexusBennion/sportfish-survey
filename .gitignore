@@ -42,3 +42,13 @@ next-env.d.ts
 
 # Compiled service worker
 /public/sw*
+
+# OpenNext
+.open-next
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+
+!.env.example

@@ -9,3 +9,5 @@ const withSerwist = withSerwistInit({
 export default withSerwist({
   // Your existing Next.js config
 });
+
+import('@opennextjs/cloudflare').then(m => m.initOpenNextCloudflareForDev());

@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-export const manifest = "/manifest.json";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,7 +19,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: "Sportfish",
   description: "A bare minimum PWA",
-  manifest: manifest,
+  manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",

@@ -2,6 +2,7 @@
 
 import { useEffect, useState, ChangeEvent } from "react";
 import { printServer } from "@/lib/printServer";
+import { useNetworkStatus } from "@/lib/useNetworkStatus";
 
 type SurveyData = {
   input: string;
@@ -13,6 +14,7 @@ export default function Form() {
     const savedData = localStorage.getItem("survey");
     return savedData ? JSON.parse(savedData) : { input: "" };
   });
+  const isOnline = useNetworkStatus();
 
   useEffect(() => {
     localStorage.setItem("survey", JSON.stringify(formData));
@@ -28,10 +30,12 @@ export default function Form() {
   function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    printServer(formData.input);
+    if (isOnline) {
+      printServer(formData.input);
 
-    localStorage.removeItem("survey");
-    setFormData({ input: "" });
+      localStorage.removeItem("survey");
+      setFormData({ input: "" });
+    }
   }
 
   return (
@@ -43,7 +47,16 @@ export default function Form() {
         value={formData.input}
         onChange={handleChange}
       />
-      <button className="px-2 py-1 rounded-sm bg-gray-300 w-min">Submit</button>
+      <button
+        className={`px-2 py-1 rounded-sm w-min ${
+          isOnline
+            ? "bg-gray-300 hover:bg-gray-400"
+            : "bg-gray-100 text-gray-400 cursor-not-allowed"
+        }`}
+      >
+        {isOnline ? "Submit" : "Offline"}
+      </button>
+      {isOnline ? null : <span>You&aposre currently offline</span>}
     </form>
   );
 }
